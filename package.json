@@ -1,0 +1,56 @@
+{
+  "name": "chatchat",
+  "version": "0.0.1",
+  "description": "Chat chat",
+  "main": "dist/main.cjs",
+  "scripts": {
+    "build": "node script/build.cjs",
+    "dev": "node script/dev.cjs",
+    "pluign": "node script/pluign.cjs"
+  },
+  "env": {
+    "HOST": "127.0.0.1",
+    "PORT": "24280"
+  },
+  "build": {
+    "appId": "site.sooo.app.chatchat",
+    "productName": "Chat Chat",
+    "executableName": "chatchat",
+    "asar": false,
+    "icon": "public/icon",
+    "directories": {
+      "output": "release/${version}"
+    },
+    "linux": {
+      "target": "AppImage",
+      "category": "chat"
+    }
+  },
+  "engines": {
+    "node": ">=10",
+    "pnpm": ">=3"
+  },
+  "keywords": [
+    "chat",
+    "oicq",
+    "qq"
+  ],
+  "author": "So",
+  "license": "MIT",
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^2.0.1",
+    "electron": "^16.0.5",
+    "electron-builder": "^22.14.5",
+    "naive-ui": "^2.23.2",
+    "sass": "^1.45.2",
+    "typescript": "^4.5.4",
+    "vite": "^2.7.10",
+    "vue-tsc": "^0.30.1"
+  },
+  "dependencies": {
+    "@vueuse/core": "^7.5.1",
+    "vue": "^3.2.26",
+    "vue-router": "^4.0.12",
+    "vuex": "^4.0.2"
+  }
+}
