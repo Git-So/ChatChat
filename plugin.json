@@ -1,0 +1,11 @@
+[
+  {
+    "name": "example",
+    "id": "chatchat.plugin.example",
+    "author": "So",
+    "description": "一个插件例子",
+    "onlyDev": true,
+    "homepage": "https://xxxx",
+    "repository": "https://github.com/xxxx"
+  }
+]

@@ -1,0 +1,7 @@
+#add: 增加插件信息
+#update: 修改插件信息
+#delete: 删除插件信息
+#style: 代码格式改变
+#docs: 文档说明变动
+#revert: 撤销上一次的 commit
+#init: 初始化
