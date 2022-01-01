@@ -38,6 +38,7 @@
   "author": "So",
   "license": "MIT",
   "devDependencies": {
+    "@vicons/material": "^0.11.0",
     "@vitejs/plugin-vue": "^2.0.1",
     "electron": "^16.0.5",
     "electron-builder": "^22.14.5",
