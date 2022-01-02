@@ -1,5 +1,5 @@
 <template>
-    <n-list>
+    <n-list class="chat-card">
         <template v-for="chat in chats" :key="chat.id">
             <router-link
                 :to="`/chat/${chat.type}/${chat.type_value}`"
@@ -8,11 +8,11 @@
                 v-slot="{ navigate }"
             >
                 <n-list-item @click="navigate" class="item">
-                    <n-grid>
-                        <n-grid-item span="5">
+                    <n-grid cols="48">
+                        <n-grid-item span="11">
                             <n-avatar round :size="48" :src="chat.avatar" />
                         </n-grid-item>
-                        <n-grid-item span="19">
+                        <n-grid-item span="37">
                             <div class="top">
                                 <span class="title">{{ chat.title }}</span>
                                 <n-space justify="end" class="time">
@@ -44,14 +44,22 @@ defineProps({
 </script>
 
 <style lang="scss" scoped>
+.chat-card {
+    padding-inline-start: 0 !important;
+    margin-block-start: 0 !important;
+}
+
 .item {
     margin: 0 8px;
+    user-select: none;
+
     .title {
         font-weight: 600;
     }
 
-    .time {
-        padding-left: 5px;
+    .time,
+    .unread {
+        padding: 0 5px;
     }
 
     .top,
