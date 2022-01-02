@@ -1,8 +1,8 @@
 <template>
     <n-layout-header bordered class="titlebar">
         <div class="left">
-            <n-button text>
-                <n-icon size="32">
+            <n-button text v-if="isShowBackBtn">
+                <n-icon size="32" @click="router.back">
                     <arrow-back-filled />
                 </n-icon>
             </n-button>
@@ -17,10 +17,17 @@
 <script lang="ts" setup>
 import { NLayoutHeader, NButton, NIcon, NH2 } from "naive-ui";
 import { ArrowBackFilled } from "@vicons/material";
+import router from "../router"
+import { computed, Ref } from "vue";
 
 defineProps({
     title: String,
 })
+
+const isShowBackBtn: Ref<boolean> = computed(() => {
+    return !!window.history.state.back
+})
+
 </script>
 
 
