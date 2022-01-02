@@ -5,13 +5,7 @@
             <n-layout-sider class="sider" bordered>
                 <n-list>
                     <template v-for="item in routes" key="item.name">
-                        <router-link
-                            :to="item.name"
-                            custom
-                            replace
-                            v-slot="{ navigate }"
-                            active-class="active"
-                        >
+                        <router-link :to="item.name" custom replace v-slot="{ navigate }">
                             <n-list-item @click="navigate">
                                 <template #prefix>
                                     <n-icon size="42">

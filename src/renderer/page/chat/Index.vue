@@ -1,0 +1,68 @@
+<template>
+    <n-layout class="chat">
+        <Titlebar title="聊天"></Titlebar>
+        <n-layout has-sider class="main">
+            <n-layout-sider class="sider" bordered>
+                <ChatCard :chats="chats" />
+            </n-layout-sider>
+            <n-layout>
+                <router-view />
+            </n-layout>
+        </n-layout>
+    </n-layout>
+</template>
+
+<script lang="ts" setup>
+import { NLayout, NLayoutSider, } from "naive-ui";
+import Titlebar from "../../widget/Titlebar.vue";
+import ChatCard from "../../widget/ChatCard.vue";
+import { Chat, ChatType } from "../../../data/Chat";
+
+const chats: Array<Chat> = [{
+    id: 1,
+    title: "联系人XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
+    avatar: "https://q1.qlogo.cn/g?b=qq&nk=305784840&s=100",
+    type: ChatType.Contact,
+    type_value: "121212",
+    preview: "这是一条预览消息,这是一条预览消息,这是一条预览消息,这是一条预览消息,这是一条预览消息",
+    unread: 9,
+    time: 2134567834
+}, {
+    id: 2,
+    title: "群组XXXX",
+    avatar: "https://q1.qlogo.cn/g?b=qq&nk=305784840&s=100",
+    type: ChatType.Group,
+    type_value: "121212",
+    preview: "这是一条预览消息",
+    unread: 0,
+    time: 2134567834
+}, {
+    id: 3,
+    title: "频道XXX",
+    avatar: "https://q1.qlogo.cn/g?b=qq&nk=305784840&s=100",
+    type: ChatType.Channel,
+    type_value: "121212",
+    preview: "这是一条预览消息",
+    unread: 12,
+    time: 2134567834
+}, {
+    id: 4,
+    title: "其他类型信息",
+    avatar: "https://q1.qlogo.cn/g?b=qq&nk=305784840&s=100",
+    type: ChatType.Other,
+    type_value: "121212",
+    preview: "这是一条预览消息",
+    unread: 100,
+    time: 2134567834
+}]
+</script>
+
+<style lang="scss" scoped>
+.chat {
+    height: 100vh;
+
+    .main {
+        height: 100%;
+    }
+}
+</style>
