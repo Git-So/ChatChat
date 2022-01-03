@@ -3,7 +3,7 @@
         <n-layout has-sider class="main">
             <n-layout-sider class="sider" bordered>
                 <n-layout-header class="sider-header">
-                    <ChatBar />
+                    <ChatBar @menu="drawer?.onShow" />
                 </n-layout-header>
                 <n-layout :native-scrollbar="false" class="sider-content">
                     <ChatCard :chats="chats" />
@@ -13,6 +13,7 @@
                 <router-view />
             </n-layout>
         </n-layout>
+        <Drawer ref="drawer" />
     </n-layout>
 </template>
 
@@ -21,6 +22,11 @@ import { NLayout, NLayoutSider, NLayoutHeader, } from "naive-ui";
 import { Chat, ChatType } from "../../../data/Chat";
 import ChatCard from "../../widget/ChatCard.vue";
 import ChatBar from "../../widget/ChatBar.vue";
+import Drawer from "../../layout/Drawer.vue";
+import { ref } from "vue";
+import { ExposeDrawer } from "../../layout/interface/Expose";
+
+const drawer = ref<ExposeDrawer>(undefined)
 
 const chats: Array<Chat> = [{
     id: 1,
@@ -48,141 +54,6 @@ const chats: Array<Chat> = [{
     type_value: "121212",
     preview: "这是一条预览消息",
     unread: 12,
-    time: 2134567834
-}, {
-    id: 4,
-    title: "其他类型信息",
-    avatar: "https://q1.qlogo.cn/g?b=qq&nk=305784840&s=100",
-    type: ChatType.Other,
-    type_value: "121212",
-    preview: "这是一条预览消息",
-    unread: 100,
-    time: 2134567834
-}, {
-    id: 4,
-    title: "其他类型信息",
-    avatar: "https://q1.qlogo.cn/g?b=qq&nk=305784840&s=100",
-    type: ChatType.Other,
-    type_value: "121212",
-    preview: "这是一条预览消息",
-    unread: 100,
-    time: 2134567834
-}, {
-    id: 4,
-    title: "其他类型信息",
-    avatar: "https://q1.qlogo.cn/g?b=qq&nk=305784840&s=100",
-    type: ChatType.Other,
-    type_value: "121212",
-    preview: "这是一条预览消息",
-    unread: 100,
-    time: 2134567834
-}, {
-    id: 4,
-    title: "其他类型信息",
-    avatar: "https://q1.qlogo.cn/g?b=qq&nk=305784840&s=100",
-    type: ChatType.Other,
-    type_value: "121212",
-    preview: "这是一条预览消息",
-    unread: 100,
-    time: 2134567834
-}, {
-    id: 4,
-    title: "其他类型信息",
-    avatar: "https://q1.qlogo.cn/g?b=qq&nk=305784840&s=100",
-    type: ChatType.Other,
-    type_value: "121212",
-    preview: "这是一条预览消息",
-    unread: 100,
-    time: 2134567834
-}, {
-    id: 4,
-    title: "其他类型信息",
-    avatar: "https://q1.qlogo.cn/g?b=qq&nk=305784840&s=100",
-    type: ChatType.Other,
-    type_value: "121212",
-    preview: "这是一条预览消息",
-    unread: 100,
-    time: 2134567834
-}, {
-    id: 4,
-    title: "其他类型信息",
-    avatar: "https://q1.qlogo.cn/g?b=qq&nk=305784840&s=100",
-    type: ChatType.Other,
-    type_value: "121212",
-    preview: "这是一条预览消息",
-    unread: 100,
-    time: 2134567834
-}, {
-    id: 4,
-    title: "其他类型信息",
-    avatar: "https://q1.qlogo.cn/g?b=qq&nk=305784840&s=100",
-    type: ChatType.Other,
-    type_value: "121212",
-    preview: "这是一条预览消息",
-    unread: 100,
-    time: 2134567834
-}, {
-    id: 4,
-    title: "其他类型信息",
-    avatar: "https://q1.qlogo.cn/g?b=qq&nk=305784840&s=100",
-    type: ChatType.Other,
-    type_value: "121212",
-    preview: "这是一条预览消息",
-    unread: 100,
-    time: 2134567834
-}, {
-    id: 4,
-    title: "其他类型信息",
-    avatar: "https://q1.qlogo.cn/g?b=qq&nk=305784840&s=100",
-    type: ChatType.Other,
-    type_value: "121212",
-    preview: "这是一条预览消息",
-    unread: 100,
-    time: 2134567834
-}, {
-    id: 4,
-    title: "其他类型信息",
-    avatar: "https://q1.qlogo.cn/g?b=qq&nk=305784840&s=100",
-    type: ChatType.Other,
-    type_value: "121212",
-    preview: "这是一条预览消息",
-    unread: 100,
-    time: 2134567834
-}, {
-    id: 4,
-    title: "其他类型信息",
-    avatar: "https://q1.qlogo.cn/g?b=qq&nk=305784840&s=100",
-    type: ChatType.Other,
-    type_value: "121212",
-    preview: "这是一条预览消息",
-    unread: 100,
-    time: 2134567834
-}, {
-    id: 4,
-    title: "其他类型信息",
-    avatar: "https://q1.qlogo.cn/g?b=qq&nk=305784840&s=100",
-    type: ChatType.Other,
-    type_value: "121212",
-    preview: "这是一条预览消息",
-    unread: 100,
-    time: 2134567834
-}, {
-    id: 4,
-    title: "其他类型信息",
-    avatar: "https://q1.qlogo.cn/g?b=qq&nk=305784840&s=100",
-    type: ChatType.Other,
-    type_value: "121212",
-    preview: "这是一条预览消息",
-    unread: 100,
-    time: 2134567834
-}, {
-    id: 4,
-    title: "其他类型信息",
-    avatar: "https://q1.qlogo.cn/g?b=qq&nk=305784840&s=100",
-    type: ChatType.Other,
-    type_value: "121212",
-    preview: "这是一条预览消息",
-    unread: 100,
     time: 2134567834
 }, {
     id: 4,

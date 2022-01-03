@@ -2,7 +2,7 @@
     <n-layout-header bordered class="chat-bar">
         <n-grid>
             <n-grid-item span="4" class="n-gi-btn">
-                <n-button text>
+                <n-button text @click="onMenu">
                     <n-icon size="25">
                         <menu-filled />
                     </n-icon>
@@ -18,6 +18,9 @@
 <script lang="ts" setup>
 import { NButton, NIcon, NInput, NLayoutHeader, NGrid, NGridItem } from "naive-ui";
 import { MenuFilled } from "@vicons/material";
+
+const emit = defineEmits(["menu"])
+const onMenu = () => emit("menu")
 </script>
 
 <style lang="scss" scoped>
