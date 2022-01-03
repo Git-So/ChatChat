@@ -4,8 +4,8 @@ import { computed } from "vue";
 import store from "./store";
 
 export const lightThemeOverrides: GlobalThemeOverrides = {
-  Layout: {
-    color: "#F5F5F5",
+  Drawer: {
+    bodyPadding: "16px",
   },
 };
 

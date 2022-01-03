@@ -47,6 +47,7 @@ defineProps({
 .chat-card {
     padding-inline-start: 0 !important;
     margin-block-start: 0 !important;
+    background-color: #fff;
 }
 
 .item {
@@ -55,6 +56,11 @@ defineProps({
 
     .title {
         font-weight: 600;
+    }
+    .preview,
+    .time {
+        color: #999;
+        font-size: 13px;
     }
 
     .time,
