@@ -10,7 +10,7 @@
                 <n-list-item @click="navigate" class="item">
                     <n-grid cols="48">
                         <n-grid-item span="11">
-                            <n-avatar round :size="48" :src="chat.avatar" />
+                            <n-avatar round :size="45" :src="chat.avatar" />
                         </n-grid-item>
                         <n-grid-item span="37">
                             <div class="top">
