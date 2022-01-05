@@ -14,3 +14,6 @@ import { RouterView } from "vue-router";
 import { theme, themeOverrides } from "./theme"
 </script>
 
+<style lang="scss">
+@import "./style/global.scss";
+</style>
