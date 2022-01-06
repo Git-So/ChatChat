@@ -1,6 +1,6 @@
 <template>
     <n-list class="menu">
-        <n-list-item v-for="item in menu" class="item">
+        <n-list-item v-for="item in menu" class="item" :class="{ 'hide-border': hideBorder }">
             <n-grid>
                 <n-grid-item span="4" class="icon">
                     <n-icon size="32">
@@ -30,11 +30,23 @@ import { Menu } from "../type";
 
 defineProps({
     menu: Array as () => Array<Menu>,
+    hideBorder: Boolean,
 })
 </script>
 
 <style lang="scss" scoped>
 .menu {
+    margin-block-start: 0;
+    margin-block-end: 0;
+
+    .item {
+        padding: 6px 0;
+
+        &.hide-border {
+            border: none;
+        }
+    }
+
     .icon {
         display: flex;
     }
