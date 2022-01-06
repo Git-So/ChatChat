@@ -5,9 +5,12 @@
         placement="left"
         width="272"
     >
-        <n-drawer-content>
-            <template #header>Header</template>
+        <n-drawer-content class="content">
+            <template #header>
+                <DrawerHeader @handle="onChangeDrawerAccount" />
+            </template>
             <n-layout>
+                <DrawerAccount :show="isShowDrawerAccount" />
                 <Menu :menu="menu" />
             </n-layout>
             <template #footer>
@@ -21,15 +24,16 @@
 </template>
 
 <script lang="ts" setup>
-import { NDrawer, NDrawerContent, NSpace, NLayout, } from "naive-ui";
-import { computed, shallowRef } from "vue";
+import { NDrawer, NDrawerContent, NSpace, NLayout, NLayoutHeader, } from "naive-ui";
+import { computed, ref } from "vue";
 import Menu from "../widget/Menu.vue";
+import DrawerHeader from "../widget/DrawerHeader.vue";
+import DrawerAccount from "../widget/DrawerAccount.vue";
 import store from "../store";
 import { ExposeDrawer } from "./interface/Expose";
 import { PersonFilled, GroupRound, SettingsFilled, DarkModeFilled, } from "@vicons/material";
 import { Menu as IMenu, MenuType } from "../type";
 
-const isShow = computed(() => store.state.isShowDrawer)
 
 const menu: Array<IMenu> = [{
     icon: PersonFilled,
@@ -55,7 +59,15 @@ const menu: Array<IMenu> = [{
     title: "夜间模式",
     type: MenuType.Switch,
 }]
+
+// 抽屉账号列表
+const isShowDrawerAccount = ref(false);
+const onChangeDrawerAccount = () => {
+    isShowDrawerAccount.value = !isShowDrawerAccount.value
+}
+
 // 显示状态
+const isShow = computed(() => store.state.isShowDrawer)
 const onUpdateShowState = (isShow: boolean) => store.commit("updateDrawerState", isShow)
 const onShow = () => onUpdateShowState(true)
 const onHide = () => onUpdateShowState(false)
@@ -66,4 +78,9 @@ defineExpose(<ExposeDrawer>{
 </script>
 
 <style lang="scss" scoped>
+.content {
+    :deep(.n-drawer-header__main) {
+        width: 100%;
+    }
+}
 </style>
