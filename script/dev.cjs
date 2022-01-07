@@ -5,11 +5,11 @@ const { electronConfig, rendererConfing } = require("./config.cjs");
 
 class DevApp {
   isInit = false;
-  electronProcess;
+  electronProcess = undefined;
 
   async run() {
     await this.start();
-    this.isInit = false;
+    this.isInit = true;
   }
 
   async start() {
@@ -25,15 +25,16 @@ class DevApp {
   async electronWatch() {
     // 挂载开发配置
     electronConfig.build.watch = {};
-    electronConfig.plugins = [{ writeBundle: this.restartElectron }];
+    electronConfig.plugins = [
+      { writeBundle: () => this.restartElectron.apply(this) },
+    ];
 
     await build(electronConfig);
   }
 
-  async restartElectron() {
+  restartElectron() {
     if (this.electronProcess && !this.isInit) return;
     if (this.electronProcess) this.electronProcess.kill();
-
     this.electronProcess = spawn(electron, ["."], {
       stdio: "inherit",
       env: Object.assign(process.env),
