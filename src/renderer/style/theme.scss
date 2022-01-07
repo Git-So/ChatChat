@@ -1,0 +1,7 @@
+@import "./common.scss";
+
+.n-list .n-list-item {
+  @extend %text-ellipsis;
+  padding: 8px 0;
+  font-weight: 500;
+}
