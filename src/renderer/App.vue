@@ -16,4 +16,5 @@ import { theme, themeOverrides } from "./theme"
 
 <style lang="scss">
 @import "./style/global.scss";
+@import "./style/theme.scss";
 </style>
