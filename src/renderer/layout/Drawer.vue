@@ -133,10 +133,6 @@ defineExpose(<ExposeDrawer>{
 @import "../style/common.scss";
 
 .content {
-    :deep(.n-list) {
-        padding: 8px 16px;
-    }
-
     :deep(.n-drawer-header) {
         padding-bottom: 4px;
     }
