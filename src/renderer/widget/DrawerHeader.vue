@@ -1,13 +1,13 @@
 <template>
     <n-layout class="drawer-header">
-        <n-avatar round :size="50" src="https://q1.qlogo.cn/g?b=qq&nk=305784840&s=100" />
+        <n-avatar round :size="50" :src="account?.avatar" />
         <n-space justify="space-between" class="info">
             <n-space vertical>
-                <span class="nickname">我的昵称</span>
-                <span class="uid">UID: 88888888</span>
+                <span class="nickname">{{ account?.nickname }}</span>
+                <span class="uid">UID: {{ account?.uid }}</span>
             </n-space>
-            <n-button text @click="onclick">
-                <n-icon size="35" class="arrow" :class="{ odd: isOdd }">
+            <n-button text @click="onUp">
+                <n-icon size="35" class="arrow" :class="{ up: up }">
                     <keyboard-arrow-up-filled />
                 </n-icon>
             </n-button>
@@ -20,12 +20,15 @@ import {
     NLayout, NAvatar, NSpace, NButton, NIcon,
 } from "naive-ui";
 import { KeyboardArrowUpFilled } from "@vicons/material";
-import { ref } from "vue";
+import { Account } from "../../data/Account";
 
-const isOdd = ref(false)
+defineProps({
+    account: Object as () => Account,
+    up: Boolean,
+})
+
 const emit = defineEmits(['handle',])
-const onclick = () => {
-    isOdd.value = !isOdd.value
+const onUp = () => {
     emit("handle")
 }
 </script>
@@ -51,9 +54,10 @@ const onclick = () => {
 
 .arrow {
     transition-duration: 0.3s;
+    transform: rotate(-180deg);
 }
 
-.odd {
-    transform: rotate(180deg);
+.up {
+    transform: rotate(0deg);
 }
 </style>
