@@ -3,7 +3,7 @@
         <n-layout has-sider class="main">
             <n-layout-sider class="sider" bordered>
                 <n-layout-header class="sider-header">
-                    <ChatBar @menu="drawer?.onShow" />
+                    <ChatBar @menu="drawer!.onShow" />
                 </n-layout-header>
                 <n-layout :native-scrollbar="false" class="sider-content">
                     <ChatCard :chats="chats" />
@@ -26,7 +26,7 @@ import Drawer from "../../layout/Drawer.vue";
 import { ref } from "vue";
 import { ExposeDrawer } from "../../layout/interface/Expose";
 
-const drawer = ref<ExposeDrawer | undefined>(undefined)
+const drawer = ref<ExposeDrawer>()
 
 const chats: Array<Chat> = [{
     id: 1,
