@@ -26,7 +26,7 @@ import Drawer from "../../layout/Drawer.vue";
 import { ref } from "vue";
 import { ExposeDrawer } from "../../layout/interface/Expose";
 
-const drawer = ref<ExposeDrawer>(undefined)
+const drawer = ref<ExposeDrawer | undefined>(undefined)
 
 const chats: Array<Chat> = [{
     id: 1,
@@ -74,6 +74,8 @@ const chats: Array<Chat> = [{
 
         &,
         & > :deep(.n-layout-sider-scroll-container) {
+            min-width: 0 !important;
+            max-width: 260px !important ;
             height: 100vh;
             display: flex;
             flex-direction: column;

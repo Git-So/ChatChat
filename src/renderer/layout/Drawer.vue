@@ -3,7 +3,7 @@
         v-model:show="isShow"
         :on-update:show="onUpdateShowState"
         placement="left"
-        width="272"
+        width="260"
     >
         <n-drawer-content class="content">
             <template #header>
