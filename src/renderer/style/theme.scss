@@ -1,7 +1,17 @@
 @import "./common.scss";
 
 .n-list .n-list-item {
-  @extend %text-ellipsis;
   padding: 8px 0;
   font-weight: 500;
+  display: flex;
+  flex-direction: row;
+
+  .n-list-item__prefix,
+  .n-list-item__suffix {
+    display: flex;
+  }
+
+  .n-list-item__main {
+    @extend %flex-row;
+  }
 }
