@@ -1,6 +1,11 @@
 <template>
     <n-list class="menu">
-        <n-list-item v-for="item in menu" class="item" :class="{ 'hide-border': hideBorder }">
+        <n-list-item
+            v-for="item in menu"
+            @click="onAction(item)"
+            :class="{ 'hide-border': hideBorder }"
+            class="item"
+        >
             <template #prefix>
                 <n-icon size="32">
                     <component :is="item.icon"></component>
@@ -11,7 +16,9 @@
                 <div v-if="item.description" class="description">{{ item.description }}</div>
             </div>
             <template #suffix>
-                <n-switch />
+                <template v-if="item.type == MenuType.Switch">
+                    <n-switch @update:value="(item as IMenuSwitch).update" />
+                </template>
             </template>
         </n-list-item>
     </n-list>
@@ -20,12 +27,30 @@
 
 <script lang="ts" setup>
 import { NList, NListItem, NIcon, NSwitch, } from "naive-ui";
-import { Menu } from "../type";
+import router from "../router";
+import { Menu, MenuType, MenuButton, MenuRouterLink, MenuSwitch, } from "../type";
+
+type IMenuSwitch = MenuSwitch;
 
 defineProps({
     menu: Array as () => Array<Menu>,
     hideBorder: Boolean,
 })
+
+const onAction = (menu: Menu) => {
+    // 按钮事件
+    if (menu.type == MenuType.Button) {
+        (menu as MenuButton).action(menu as MenuButton);
+        return
+    }
+
+    // 默认事件
+    const route = (menu as MenuRouterLink).route
+    const replace = (menu as MenuRouterLink).replace
+    if (route)
+        replace ? router.replace(route) : router.push(route);
+}
+
 </script>
 
 <style lang="scss" scoped>
@@ -37,7 +62,7 @@ defineProps({
             border: none;
         }
     }
-    
+
     .content {
         display: flex;
         flex-direction: column;

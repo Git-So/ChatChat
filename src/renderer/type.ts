@@ -1,20 +1,32 @@
 import { Component, Ref } from "vue";
 
 export enum Theme {
-  Auto = 0,
+  Auto,
   Light,
   Dark,
 }
 
 export enum MenuType {
-  Button = 0,
+  RouterLink,
+  Button,
   Switch,
 }
 export interface Menu {
   type?: MenuType;
-  icon: Component;
+  icon?: Component;
   title: string;
   description?: string;
-  value?: Ref<boolean>;
-  event?: Function;
+}
+
+export interface MenuRouterLink extends Menu {
+  route: string;
+  replace?: boolean;
+}
+
+export interface MenuButton extends Menu {
+  action(menu: MenuButton): void;
+}
+
+export interface MenuSwitch extends Menu {
+  update(state: boolean): void;
 }
