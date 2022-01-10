@@ -6,8 +6,7 @@
   .n-list-item {
     padding: 8px 0;
     font-weight: 500;
-    display: flex;
-    flex-direction: row;
+    @extend %flex-row;
 
     .n-list-item__prefix,
     .n-list-item__suffix {
@@ -18,4 +17,12 @@
       @extend %flex-row;
     }
   }
+}
+
+.n-layout-sider,
+.n-layout-sider-scroll-container {
+  width: 260px !important;
+  max-width: 260px !important ;
+  height: 100vh;
+  @extend %flex-column;
 }
