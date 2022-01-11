@@ -22,6 +22,7 @@
 .n-layout-sider,
 .n-layout-sider-scroll-container {
   width: 260px !important;
+  min-width: 0 !important ;
   max-width: 260px !important ;
   height: 100vh;
   @extend %flex-column;
