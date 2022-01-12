@@ -14,10 +14,11 @@
         </div>
     </n-layout-header>
 </template>
+
 <script lang="ts" setup>
 import { NLayoutHeader, NButton, NIcon, NH2 } from "naive-ui";
 import { ArrowBackFilled } from "@vicons/material";
-import router from "../router"
+import router from "../router/main";
 import { computed, Ref } from "vue";
 
 defineProps({

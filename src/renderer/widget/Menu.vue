@@ -27,7 +27,7 @@
 
 <script lang="ts" setup>
 import { NList, NListItem, NIcon, NSwitch, } from "naive-ui";
-import router from "../router";
+import router from "../router/main";
 import { Menu, MenuType, MenuButton, MenuRouterLink, MenuSwitch, } from "../type";
 
 type IMenuSwitch = MenuSwitch;
