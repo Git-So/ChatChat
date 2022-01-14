@@ -20,7 +20,7 @@ export default createRouter({
       path: "/login",
       name: "Login",
       component: () => import("../page/login/Index.vue"),
-      redirect: "/login/Account",
+      redirect: "/login/Plugin",
       children: login,
     },
     // 设置

@@ -2,12 +2,16 @@ import { RouteRecordRaw } from "vue-router";
 
 const routes: RouteRecordRaw[] = [
   {
-    path: "2FA",
-    component: () => import("../page/login/2FA.vue"),
+    path: "Plugin",
+    component: () => import("../page/login/Plugin.vue"),
   },
   {
     path: "Account",
     component: () => import("../page/login/Account.vue"),
+  },
+  {
+    path: "2FA",
+    component: () => import("../page/login/2FA.vue"),
   },
   {
     path: "Option",
