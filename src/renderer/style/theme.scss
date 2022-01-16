@@ -1,10 +1,8 @@
 @import "./common.scss";
 
 .n-list {
-  padding: 8px 16px;
-
   .n-list-item {
-    padding: 8px 0;
+    padding: 8px 16px;
     font-weight: 500;
     @extend %flex-row;
 
@@ -25,5 +23,11 @@
   min-width: 0 !important ;
   max-width: 260px !important ;
   height: 100vh;
+  @extend %flex-column;
+}
+
+.n-layout,
+.n-scrollbar,
+.n-layout-scroll-container {
   @extend %flex-column;
 }

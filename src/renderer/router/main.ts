@@ -1,14 +1,13 @@
 import { createRouter, createWebHistory } from "vue-router";
 import login from "./login";
 import setting from "./setting";
-import chat from "./chat";
 
 export default createRouter({
   history: createWebHistory(),
   routes: [
     {
       path: "/",
-      redirect: "/home",
+      redirect: "/chat",
     },
     {
       path: "/home",
@@ -34,9 +33,7 @@ export default createRouter({
     // 聊天室
     {
       path: "/chat",
-      component: () => import("../page/chat/Index.vue"),
-      redirect: "/chat/empty",
-      children: chat,
+      component: () => import("../page/Chat.vue"),
     },
     // 默认页
     { path: "/:pathMatch(.*)*", redirect: "/home" },

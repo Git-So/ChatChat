@@ -6,11 +6,17 @@
                     <ChatBar @menu="showDrawer" />
                 </n-layout-header>
                 <n-layout :native-scrollbar="false" class="sider-content">
-                    <ChatCard :chats="chats" />
+                    <ChatCard :chats="chats" :selected="chatSelected" @selected="onChatSelected" />
                 </n-layout>
             </n-layout-sider>
-            <n-layout>
-                <router-view />
+            <n-layout class="contact">
+                <Titlebar title="联系人"></Titlebar>
+                <n-layout class="messages-part" :native-scrollbar="false">
+                    <Message :messages="messages" />
+                </n-layout>
+                <n-layout-footer>
+                    <ChatToolbar />
+                </n-layout-footer>
             </n-layout>
         </n-layout>
         <Drawer ref="drawer" />
@@ -18,17 +24,26 @@
 </template>
 
 <script lang="ts" setup>
-import { NLayout, NLayoutSider, NLayoutHeader, } from "naive-ui";
-import { Chat, ChatType } from "../../../data/Chat";
-import ChatCard from "../../widget/ChatCard.vue";
-import ChatBar from "../../widget/ChatBar.vue";
-import Drawer from "../../layout/Drawer.vue";
+import { NLayout, NLayoutSider, NLayoutHeader, NLayoutFooter, } from "naive-ui";
+import { Chat, ChatType } from "../../data/Chat";
+import ChatCard from "../widget/ChatCard.vue";
+import ChatBar from "../widget/ChatBar.vue";
+import Drawer from "../layout/Drawer.vue";
 import { ref } from "vue";
-import { ExposeDrawer } from "../../layout/interface/Expose";
+import { ExposeDrawer } from "../layout/interface/Expose";
+import { Message as IMessage, MessageType } from "../../data/Message";
+import Titlebar from "../widget/Titlebar.vue"
+import ChatToolbar from "../widget/ChatToolbar.vue"
+import Message from "../widget/Message.vue"
 
 const drawer = ref<ExposeDrawer>()
 const showDrawer = () => {
     drawer.value?.onShow()
+}
+
+const chatSelected = ref(0)
+const onChatSelected = (chat: Chat) => {
+    chatSelected.value = chat.id
 }
 
 const chats: Array<Chat> = [{
@@ -68,6 +83,20 @@ const chats: Array<Chat> = [{
     unread: 100,
     time: 2134567834
 }]
+
+const msg = (key: number) => {
+    return {
+        id: +key + 1,
+        type: key % 10 ? MessageType.Chat : MessageType.Alert,
+        sender_id: "1212",
+        sender_avatar: "https://q1.qlogo.cn/g?b=qq&nk=305784840&s=100",
+        sender_name: "我的昵称",
+        content: "这是一条消息".repeat(key % 13 + 1),
+        is_self: !(key % 3),
+    }
+}
+
+const messages: Array<IMessage> = Array.from({ length: 80 }, (_, key) => msg(key))
 </script>
 
 <style lang="scss" scoped>
@@ -75,18 +104,18 @@ const chats: Array<Chat> = [{
     .sider {
         box-sizing: content-box;
 
-        &,
-        & > :deep(.n-layout-sider-scroll-container) {
-            min-width: 0 !important;
-            max-width: 260px !important ;
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-        }
-
         .sider-header {
             flex-shrink: 0;
         }
+    }
+
+    .contact {
+        height: 100vh;
+    }
+
+    .messages-part {
+        flex: 1;
+        flex-shrink: 0;
     }
 }
 </style>
