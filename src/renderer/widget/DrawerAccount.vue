@@ -2,7 +2,11 @@
     <n-collapse-transition :show="isShow">
         <n-layout-header bordered>
             <n-list>
-                <n-list-item v-for="account in accounts">
+                <n-list-item
+                    v-for="account in accounts"
+                    @click="onSelectAccount(account)"
+                    class="item"
+                >
                     <template #prefix>
                         <n-avatar round :size="32" :src="account.avatar" />
                     </template>
@@ -13,7 +17,7 @@
                         </n-icon>
                     </template>
                 </n-list-item>
-                <n-list-item>
+                <n-list-item @click="onAddAccount" class="item">
                     <template #prefix>
                         <n-icon size="32" class="icon">
                             <account-circle-filled />
@@ -37,9 +41,19 @@ defineProps({
     selectedAccountId: Number,
 })
 
+const emit = defineEmits(["selectAccount", "addAccount",])
+const onSelectAccount = (account: Account) => emit("selectAccount", account)
+const onAddAccount = () => emit("addAccount")
+
 </script>
 
 <style lang="scss" scoped>
+@import "../style/common.scss";
+
+.item {
+    @extend %selected;
+}
+
 .icon {
     display: flex;
 }

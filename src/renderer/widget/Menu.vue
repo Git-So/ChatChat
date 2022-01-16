@@ -17,7 +17,10 @@
             </div>
             <template #suffix>
                 <template v-if="item.type == MenuType.Switch">
-                    <n-switch @update:value="(item as IMenuSwitch).update" />
+                    <n-switch
+                        v-model:value="(item as IMenuSwitch).value"
+                        @update:value="(item as IMenuSwitch).update"
+                    />
                 </template>
             </template>
         </n-list-item>
@@ -58,6 +61,7 @@ const onAction = (menu: Menu) => {
 
 .menu {
     .item {
+        @extend %selected;
         &.hide-border {
             border: none;
         }
