@@ -1,4 +1,4 @@
-import { Component, Ref } from "vue";
+import { Component, ComputedRef, Ref } from "vue";
 
 export enum Theme {
   Auto,
@@ -28,5 +28,6 @@ export interface MenuButton extends Menu {
 }
 
 export interface MenuSwitch extends Menu {
+  value: boolean;
   update(state: boolean): void;
 }

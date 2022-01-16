@@ -10,5 +10,11 @@ export default createStore({
     updateDrawerState(state, isShow) {
       state.isShowDrawer = isShow;
     },
+    enableDarkTheme(state, isEnable) {
+      state.theme = isEnable ? Theme.Dark : Theme.Auto;
+    },
+  },
+  getters: {
+    isDarkTheme: (state): boolean => state.theme == Theme.Dark,
   },
 });

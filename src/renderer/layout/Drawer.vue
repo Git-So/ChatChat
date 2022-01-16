@@ -18,6 +18,8 @@
                     :show="isShowDrawerAccount"
                     :accounts="accounts"
                     :selected-account-id="selectedAccountId"
+                    @selectAccount="onSelectAccount"
+                    @addAccount="onAddAccount"
                 />
                 <Menu :menu="menu" hide-border />
             </n-layout>
@@ -39,9 +41,10 @@ import DrawerHeader from "../widget/DrawerHeader.vue";
 import DrawerAccount from "../widget/DrawerAccount.vue";
 import store from "../store";
 import { ExposeDrawer } from "./interface/Expose";
-import { PersonFilled, GroupRound, SettingsFilled, DarkModeFilled, } from "@vicons/material";
-import { Menu as IMenu, MenuType } from "../type";
+import { PersonFilled, GroupRound, SettingsFilled, DarkModeFilled, ManageAccountsFilled } from "@vicons/material";
+import { Menu as IMenu, MenuType, MenuSwitch, MenuRouterLink, Theme } from "../type";
 import { Account as IAccount } from "../../data/Account";
+import router from "../router";
 
 const account: IAccount = {
     id: 1,
@@ -51,7 +54,7 @@ const account: IAccount = {
 }
     ;
 
-const selectedAccountId = 2
+const selectedAccountId = ref(1)
 const accounts: Array<IAccount> = [{
     id: 1,
     avatar: "https://q1.qlogo.cn/g?b=qq&nk=305784840&s=100",
@@ -66,45 +69,27 @@ const accounts: Array<IAccount> = [{
     nickname: "还是昵称",
 }]
 
-const menu: Array<IMenu> = [{
+const isDarkTheme = computed(() => store.state.theme == Theme.Dark)
+const menu: Array<IMenu | MenuSwitch | MenuRouterLink> = [{
     icon: PersonFilled,
     title: "联系人",
 }, {
     icon: GroupRound,
-    type: MenuType.Switch,
     title: "群组",
 }, {
-    icon: PersonFilled,
-    title: "联系人",
-    description: "我的联系人，哈哈哈哈哈1111",
-}, {
-    icon: PersonFilled,
-    type: MenuType.Switch,
-    title: "联系人",
-    description: "我的联系人，哈哈哈哈哈1111",
+    icon: ManageAccountsFilled,
+    title: "用户设置",
+    route: "/setting",
 }, {
     icon: SettingsFilled,
-    title: "设置",
+    title: "系统设置",
+    route: "/setting",
 }, {
     icon: DarkModeFilled,
     title: "夜间模式",
     type: MenuType.Switch,
-}, {
-    icon: DarkModeFilled,
-    title: "夜间模式",
-    type: MenuType.Switch,
-}, {
-    icon: DarkModeFilled,
-    title: "夜间模式",
-    type: MenuType.Switch,
-}, {
-    icon: DarkModeFilled,
-    title: "夜间模式",
-    type: MenuType.Switch,
-}, {
-    icon: DarkModeFilled,
-    title: "夜间模式",
-    type: MenuType.Switch,
+    value: store.getters.isDarkTheme,
+    update: (state) => store.commit("enableDarkTheme", state)
 }]
 
 // 抽屉账号列表
@@ -122,7 +107,13 @@ const onUpdateShowState = (isShow: boolean) => {
 const onShow = () => onUpdateShowState(true)
 const onHide = () => onUpdateShowState(false)
 
+// 选择账号
+const onSelectAccount = (account: IAccount) => {
+    selectedAccountId.value = account.id
+}
 
+// 添加账号
+const onAddAccount = () => router.push("/login")
 
 defineExpose(<ExposeDrawer>{
     onUpdateShowState, onShow, onHide,
