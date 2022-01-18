@@ -91,7 +91,7 @@ const msg = (key: number) => {
         sender_id: "1212",
         sender_avatar: "https://q1.qlogo.cn/g?b=qq&nk=305784840&s=100",
         sender_name: "我的昵称",
-        content: "这是一条消息".repeat(key % 13 + 1),
+        content: "🔥😂这是一条消息".repeat(key % 13 + 1),
         is_self: !(key % 3),
     }
 }

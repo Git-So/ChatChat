@@ -8,7 +8,7 @@
             <div :class="{ alert: message.type == MessageType.Alert }" class="main">
                 <!-- 提示 -->
                 <template v-if="message.type == MessageType.Alert">
-                    <div class="content" v-html="message.content" />
+                    <div class="content" v-html="emojiParse(message.content)" />
                 </template>
                 <!-- 对话 -->
                 <template v-if="message.type == MessageType.Chat">
@@ -17,7 +17,7 @@
                     </div>
                     <div class="info">
                         <div class="title">{{ message.sender_name }}</div>
-                        <div class="content" v-html="message.content" />
+                        <div class="content" v-html="emojiParse(message.content)" />
                     </div>
                 </template>
             </div>
@@ -28,10 +28,18 @@
 <script lang="ts" setup>
 import { NList, NListItem, NAvatar } from "naive-ui";
 import { Message, MessageType } from "../../data/Message";
+import Emoji from "twemoji"
 
 defineProps({
     messages: Array as () => Array<Message>,
 })
+
+const emojiParse = (text: string) => Emoji.parse(text, {
+    base: "./img/",
+    folder: 'twemoji',
+    ext: '.svg'
+})
+
 
 </script>
 
