@@ -1,15 +1,10 @@
 @import "../common.scss";
 
-@font-face {
-  font-family: "emoji";
-  src: url("./fonts/TwemojiMozilla.ttf"), local("sans-serif");
-}
 .message {
   margin-block-start: 0;
   margin-block-end: 0;
   padding: 1em 0;
   background-color: #f5f5f5;
-  font-family: "emoji";
 }
 
 .item {
@@ -58,7 +53,6 @@
     color: var(--content-font-color);
     background-color: var(--content-bg-color);
     border-radius: 5px;
-    font-family: "emoji";
     font-size: 15px;
   }
 }
