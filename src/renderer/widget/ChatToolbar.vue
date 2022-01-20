@@ -10,18 +10,11 @@
             </div>
         </div>
         <n-layout class="content" :native-scrollbar="false">
-            <div
-                ref="input"
-                @input="inputContent"
-                @focus="inputFocus"
-                v-html="content"
-                class="input"
-                contenteditable="true"
-            ></div>
+            <edit-div v-model="content" ref="input" />
         </n-layout>
         <div class="after">
             <div class="icon-group">
-                <n-button text class="icon">
+                <n-button @click="selectEmoji" text class="icon">
                     <n-icon :size="30">
                         <emoji-emotions-filled />
                     </n-icon>
@@ -39,25 +32,30 @@
 <script lang="ts" setup>
 import { NLayout, NIcon, NButton, } from "naive-ui";
 import { AttachFileFilled, EmojiEmotionsFilled, SendFilled, } from "@vicons/material";
-import { Ref, ref, watch } from "vue";
+import { onMounted, Ref, ref } from "vue";
 import { onStartTyping } from "@vueuse/core"
-import { parseHTML, preview } from "./script/preview"
+import InputWidget from "./script/input";
+import EditDiv from "./EditDiv.vue";
 
 const input: Ref<HTMLDivElement | undefined> = ref()
 const content = ref("")
 
-// 输入聚焦
-const inputFocus = (e: Event) => {
+// const inputWidget = new InputWidget(input, content)
+const selectEmoji = () => {
+    console.log("selectEmoji");
+    // inputWidget.insertText("😂")
 }
 
-// 输入转化
-const inputContent = (e: Event) => {
-    content.value = preview(parseHTML(e.target as HTMLElement))
-}
+onMounted(() => {
+    // inputWidget.register()
 
-// 自动聚焦输入
-onStartTyping(() => input.value?.focus())
+    // onStartTyping(() => {
+    //     if (inputWidget.isFocus) return
+    //     input.value?.focus()
+    //     console.log("聚焦");
 
+    // })
+})
 </script>
 
 <style lang="scss" scoped>
