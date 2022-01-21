@@ -54,6 +54,7 @@ onMounted(() => {
 @import "../style/common.scss";
 .toolbar {
     padding: 8px;
+    max-height: 12rem;
 
     .before,
     .after {
@@ -78,21 +79,18 @@ onMounted(() => {
 
         :deep(.n-scrollbar-container) {
             display: flex;
-            align-items: center;
+            align-items: baseline;
         }
 
-        .input {
-            outline: none;
-            padding: 0 1em;
-            max-height: 12em;
-            font-size: 15px;
+        :deep(.edit-div) {
+            padding-top: 0.25em;
         }
     }
 
     .icon {
         margin: 0 6px;
         & .icon-file {
-            transform: rotate(235deg);
+            transform: rotate(225deg);
         }
     }
 }

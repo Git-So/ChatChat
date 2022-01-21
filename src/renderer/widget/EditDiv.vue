@@ -30,10 +30,9 @@ defineProps({
 const input: Ref<HTMLDivElement | undefined> = ref()
 const content = ref("")
 
-watch(content, (value) => {
+watch(content, () => {
     nextTick(() => {
         if (!input.value || isComposition) return
-        console.log("更新了");
         resetIndex()
     })
 })
@@ -112,6 +111,8 @@ const onCompositionend = () => isComposition = false
 
 // 获取节点光标可用长度
 const getNodeLength = (node: Node) => {
+    console.log(node);
+
     if (node.nodeName == "#text")
         return node.textContent?.length || 0
     return node.childNodes.length
@@ -150,8 +151,10 @@ defineExpose(<IEditDiv>{
 .edit-div {
     outline: none;
     padding: 0 1em;
-    max-height: 12em;
     font-size: 15px;
+    display: inline-block;
+    width: 100%;
+    align-self: center;
 
     &:empty::before {
         content: attr(placeholder);
