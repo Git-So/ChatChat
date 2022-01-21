@@ -34,27 +34,19 @@ import { NLayout, NIcon, NButton, } from "naive-ui";
 import { AttachFileFilled, EmojiEmotionsFilled, SendFilled, } from "@vicons/material";
 import { onMounted, Ref, ref } from "vue";
 import { onStartTyping } from "@vueuse/core"
-import InputWidget from "./script/input";
 import EditDiv from "./EditDiv.vue";
+import { IEditDiv } from "./EditDiv";
 
-const input: Ref<HTMLDivElement | undefined> = ref()
+const input: Ref<IEditDiv | undefined> = ref()
 const content = ref("")
 
-// const inputWidget = new InputWidget(input, content)
-const selectEmoji = () => {
-    console.log("selectEmoji");
-    // inputWidget.insertText("😂")
-}
+const selectEmoji = () => input.value?.insertText("😂")
 
 onMounted(() => {
-    // inputWidget.register()
-
-    // onStartTyping(() => {
-    //     if (inputWidget.isFocus) return
-    //     input.value?.focus()
-    //     console.log("聚焦");
-
-    // })
+    onStartTyping(() => {
+        if (!input.value || input.value.isFocus) return
+        input.value.focus()
+    })
 })
 </script>
 

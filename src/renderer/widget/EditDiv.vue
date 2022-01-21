@@ -17,6 +17,7 @@
 
 <script lang="ts" setup>
 import { nextTick, Ref, ref, watch } from 'vue';
+import { IEditDiv } from './EditDiv';
 import { parseHTML, preview } from './script/preview';
 
 defineProps({
@@ -31,90 +32,71 @@ const content = ref("")
 
 watch(content, (value) => {
     nextTick(() => {
+        if (!input.value || isComposition) return
         console.log("更新了");
         resetIndex()
     })
 })
 
-// 光标位置
-interface Index {
-    offset: number;
-    length: number;
-    child?: Index;
-}
-let index: Index | undefined = undefined
+// 光标位置，尾部向前推算位置
+const index: number[] = [0] // 默认为尾部
 const saveIndex = () => {
     if (!input.value) return
-
-    // 初始化
-    index = undefined
 
     // 获取光标位置
     const selection = document.getSelection()
     const range = selection?.getRangeAt(0)
-    console.log(range);
     if (!range) return
-    index = {
-        offset: range.endOffset,
-        length: getNodeLength(range.endContainer),
-    }
-    if (range.endContainer == input.value) return
 
-    let node = range.endContainer
-    let parentNode = node.parentNode
-    while (node && parentNode) {
-        // 查找元素位置
-        for (const [idx, item] of parentNode.childNodes.entries()) {
-            if (item == node) {
-                index = {
-                    offset: idx,
-                    length: parentNode.childNodes.length,
-                    child: index,
-                }
-            }
+    // 光标位于总输入节点
+    index.length = 0
+    if (range.endContainer === input.value) {
+        const nodes = input.value.childNodes
+        index.unshift(nodes.length - range.endOffset)
+        if (nodes.length <= range.endOffset) return
+
+        const node = input.value.childNodes[range.endOffset]
+        if (node.nodeName != "#text") return
+        index.push(getNodeLength(node))
+        return
+    }
+
+    // 光标位于文本节点
+    const node = range.endContainer
+    index.push(getNodeLength(node) - range.endOffset)
+    for (const [idx, item] of Array.from(input.value!.childNodes).reverse().entries()) {
+        if (item === range.endContainer) {
+            index.unshift(idx)
             break
         }
-
-        if (parentNode === input.value) break
-
-        // 上层元素
-        node = parentNode
-        parentNode = node.parentNode
     }
+
+    // 位于文件节点最后不应聚焦于文本节点
+    if (index[1] == 0) index.pop()
 }
 const resetIndex = () => { // 必须为 nextTick 内部执行
-    // 获取光标所在元素
-    let node: Node = input.value as Node
-    let idx = index
-    do {
-        if (!idx) break
-
-        const nodes = node.childNodes
-        if (nodes.length < 1 || nodes.length <= idx?.offset) break
-
-        // 获取下层信息
-        node = node.childNodes[idx?.offset || 0]
-        idx = idx?.child
-    } while (node && idx?.child)
-
-    // 创建范围
-    const range = new Range()
-    range.selectNodeContents(node)
-    range.setStart(node, idx?.offset || 0)
-    range.setEnd(node, idx?.offset || 0)
-
-    // 恢复光标
     const selection = document.getSelection()
     selection?.removeAllRanges()
-    selection?.addRange(range)
+    selection?.addRange(getIndexRange(index))
 }
 
-const onInput = () => {
+// 生成预览输入
+const onInputPreview = () => {
     if (!input.value || isComposition) return
-    saveIndex()
     content.value = preview(parseHTML(input.value))
 }
 
+// 光标处添加输入内容
+const insertText = (text: string, isIndex = true, idx = [0]) => {
+    const range = getIndexRange(isIndex ? index : idx)
+    range.insertNode(document.createTextNode(text))
+    onInputPreview()
+}
+
+// 输入内容转换
+const onInput = () => onInputPreview()
+
+// 切换光标位置
 const onClick = () => saveIndex()
 
 // 聚焦状态
@@ -128,14 +110,39 @@ const onCompositionstart = () => isComposition = true
 const onCompositionupdate = () => isComposition = true
 const onCompositionend = () => isComposition = false
 
-
 // 获取节点光标可用长度
 const getNodeLength = (node: Node) => {
-    if (node.nodeName == "#text") {
+    if (node.nodeName == "#text")
         return node.textContent?.length || 0
-    }
     return node.childNodes.length
 }
+
+// 获取光标所在范围
+const getIndexRange = (index: number[]): Range => {
+    // 获取光标所在元素
+    let node: Node = input.value as Node
+    let offset = getNodeLength(node) - index[0]
+
+    // 光标位于文本节点
+    if (index.length > 1) {
+        node = node.childNodes[offset - 1]
+        offset = getNodeLength(node) - index[1]
+    }
+
+    // 创建范围
+    offset = Math.max(offset, 0)
+    const range = new Range()
+    range.selectNodeContents(node)
+    range.setStart(node, offset)
+    range.setEnd(node, offset)
+
+    return range
+}
+
+defineExpose(<IEditDiv>{
+    isFocus,
+    insertText,
+})
 
 </script>
 
